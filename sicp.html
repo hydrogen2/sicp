@@ -1,0 +1,167 @@
+<html>
+<head>
+<script>
+	/*
+	function make_accumulator(sum) {
+		return function (addend) {
+			sum += addend;
+			return sum;
+		};
+	}
+	var A = make_accumulator(5);
+	alert(A(10));
+	alert(A(10));
+	
+	function make_monitored(f) {
+		var count = 0;
+		var mf = function (value) {
+			if (value === 'how-many-calls?') {
+				return count;
+			} else if (value === 'reset-count') {
+				count = 0;
+			} else {
+				++count;
+				return f(value);
+			}
+		};
+		return mf;
+	}
+	var s = make_monitored(Math.sqrt);
+	alert(s(100));
+	alert(s('how-many-calls?'));
+
+	function call_the_cops() {
+		alert("Calling 911!");
+	}
+	
+	function make_account(balance, password) {
+		var incorrect_tries = 0;
+		var withdraw = function (amount) {
+			if (balance >= amount) {
+				balance -= amount;
+				return balance;
+			} else {
+				return "Insufficient funds";
+			}
+		};
+		var deposit = function (amount) {
+			balance += amount;
+			return balance;
+		};
+		var dispatch = function (p, m) {
+			if (p !== password) {
+				++incorrect_tries;
+				if (incorrect_tries >= 7) {
+					call_the_cops();
+				}
+				return function (amount) {
+					return "Incorrect password";
+				};
+			}
+			
+			incorrect_tries = 0;
+			
+			if (m === 'withdraw') {
+				return withdraw;
+			} else if (m === 'deposit') {
+				return deposit;
+			} else {
+				
+			}
+		};
+		return dispatch;
+	}
+	var acc = make_account(100, 'secret-password');
+	alert(acc('secret-password', 'withdraw')(40));
+	alert(acc('some-other-password', 'deposit')(50));
+	alert(acc('some-other-password', 'deposit')(50));
+	alert(acc('some-other-password', 'deposit')(50));
+	alert(acc('some-other-password', 'deposit')(50));
+	alert(acc('some-other-password', 'deposit')(50));
+	alert(acc('some-other-password', 'deposit')(50));
+	alert(acc('some-other-password', 'deposit')(50));
+	alert(acc('some-other-password', 'deposit')(50));
+	alert(acc('secret-password', 'withdraw')(40));
+	alert(acc('some-other-password', 'deposit')(50));
+	
+	function gcd(a, b) {
+		var r = a % b;
+		return r == 0 ? b : gcd(b, r);
+	}
+	
+	function rand_range(low, high) {
+		return Math.round(Math.random()*(high - low) + low);
+	}
+	
+	function monte_carlo(trials, experiment) {
+		var trials_passed = 0;
+		for (var i = 0; i < trials; ++i) {
+			if (experiment()) {
+				++trials_passed;
+			}
+		}
+		return trials_passed / trials;
+	}
+	
+	function estimate_pi(trials) {
+		var cesaro_test = function () {
+			return (gcd(rand_range(0, 1e8), rand_range(0, 1e8)) == 1);
+		};
+		return Math.sqrt(6 / monte_carlo(trials, cesaro_test));
+	}
+	
+	function estimate_integral(trials, predicate, x, y, w, h) {
+		var test = function () {
+			return predicate(x + Math.random()*w, y + Math.random()*h);
+		};
+		
+		return monte_carlo(trials, test)*w*h;
+	}
+	
+	function estimate_pi_using_integral(trials) {
+		var is_in_unit_circle = function (x, y) {
+			return x*x + y*y <= 1;
+		};
+		return estimate_integral(trials, is_in_unit_circle, -1, -1, 2, 2);
+	}
+	
+	//alert(estimate_pi(10000));
+	alert(estimate_pi_using_integral(1e8));
+	
+	function make_joint(account, account_password, joint_password) {
+		var delegate = function (p, m) {
+			if (p !== joint_password) {
+				return function (amount) {
+					return "Incorrect joint password";
+				};
+			} else {
+				return account(account_password, m);
+			}
+		};
+		return delegate;
+	}
+	var joint_acc = make_joint(acc, 'secret-password', 'joint-password');
+	alert(joint_acc('joint-password', 'withdraw')(40));
+	alert(joint_acc('joint-password', 'withdraw')(40));
+	alert(joint_acc('joint-password', 'deposit')(40));
+	
+	function make_f() {
+		var prod = 1;
+		return function (x) {
+			prod *= x;
+			return prod;
+		};
+	}
+	var f = make_f();
+	alert(f(0) + f(1));
+	f = make_f();
+	alert(f(1) + f(0));
+	*/
+	
+	
+	
+</script>
+</head>
+<body>
+</body>
+</html>
