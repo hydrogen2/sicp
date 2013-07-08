@@ -158,8 +158,388 @@
 	alert(f(1) + f(0));
 	*/
 	
+	function Pair(x, y) {
+		this.x = x;
+		this.y = y;
+	}
 	
+	function cons(x, y) {
+		return new Pair(x, y);
+	}
 	
+	function car(p) {
+		return p.x;
+	}
+
+	function cdr(p) {
+		return p.y;
+	}
+	
+	function set_car(p, x) {
+		p.x = x;
+	}
+	
+	function set_cdr(p, y) {
+		p.y = y;
+	}
+	
+	function is_pair(p) {
+		return p && Pair === p.constructor;
+	}
+	
+	function list() {
+		if (0 === arguments.length) {
+			return null;
+		} else {
+			return cons(arguments[0], list.apply(this, Array.prototype.slice.call(arguments, 1)));
+		}
+	}
+	
+	function print_list(l) {
+		if (is_pair(l)) {
+			return "(" + print_list(car(l)) + ", " + print_list(cdr(l)) + ")";
+		} else {
+			return l + "";
+		}
+	}
+	
+	//var a = list(1, 'a', 3, 'c');
+	//alert(print_list(a));
+	/*
+	function count_pairs_ng(x) {
+		if (!is_pair(x)) {
+			return 0;
+		} else {
+			return 1 + count_pairs_ng(car(x)) + count_pairs_ng(cdr(x));
+		}
+	}
+	
+	function make_pair_set() {
+		var set = [];
+		function contains(x) {
+			for (i = 0; i < set.length; ++i) {
+				if (set[i] === x) {
+					return true;
+				}
+			}
+			return false;
+		}
+		function test_and_put(x) {
+			var b = contains(x);
+			if (!b) {
+				set.push(x);
+			}
+			return b;
+		}
+		function count() {
+			return set.length;
+		}
+		return {
+			'contains': contains,
+			'test_and_put': test_and_put,
+			'count': count
+		};
+	}
+	
+	function count_pairs(x) {
+		var set = make_pair_set();
+		function count_pairs_r(x) {
+			if (is_pair(x) && !set.test_and_put(x)) {
+				count_pairs_r(car(x));
+				count_pairs_r(cdr(x));
+			}
+		}
+		count_pairs_r(x);
+		return set.count();
+	}
+	
+	function contains_cycle(x) {
+		var set = make_pair_set();
+		while (is_pair(x)) {
+			if (set.test_and_put(x)) {
+				return true;
+			}
+			x = cdr(x);
+		}
+		return false;
+	}
+	
+	function contains_cycle_2(x) {
+		var y = x;
+		while (is_pair(y)) {
+			y = cdr(y);
+			if (is_pair(y)) {
+				y = cdr(y);
+			}
+			x = cdr(x);
+			if (is_pair(x) && is_pair(y) && x === y) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	var case1 = cons(cons(1, 2), cons(3, 4));
+	
+	var p1 = cons(1, 2);
+	var p2 = cons(p1, 3);
+	var case2 = cons(p1, p2);
+	
+	var p3 = cons(p1, p1);
+	var case3 = cons(p3, p3);
+	
+	var p4 = cons(1, 2);
+	var p5 = cons(3, p4);	
+	var case4 = cons(4, p5);
+	set_cdr(p4, case4);
+	
+	alert(print_list(case1) + " = " + count_pairs(case1) + "/" + count_pairs_ng(case1) + ", contains_cycle:" + contains_cycle(case1) + ", contains_cycle_2:" + contains_cycle(case1));
+	alert(print_list(case2) + " = " + count_pairs(case2) + "/" + count_pairs_ng(case2) + ", contains_cycle:" + contains_cycle(case2) + ", contains_cycle_2:" + contains_cycle(case2));
+	alert(print_list(case3) + " = " + count_pairs(case3) + "/" + count_pairs_ng(case3) + ", contains_cycle:" + contains_cycle(case3) + ", contains_cycle_2:" + contains_cycle(case3));
+	alert("case4 = " + count_pairs(case4) + ", contains_cycle:" + contains_cycle(case4) + ", contains_cycle_2:" + contains_cycle_2(case4));
+	
+	var case5 = cons(1, 2);
+	set_cdr(case5, case5);
+	
+	var p6 = cons(3, 4);
+	var case6 = cons(1, 2);
+	set_cdr(case6, p6);
+	set_cdr(p6, case6);
+	
+	var case7 = cons(1, 2);
+	var case8 = cons(1, null);
+	var case9 = null;
+	
+	alert("case5 = " + count_pairs(case5) + ", contains_cycle:" + contains_cycle(case5) + ", contains_cycle_2:" + contains_cycle_2(case5));
+	alert("case6 = " + count_pairs(case6) + ", contains_cycle:" + contains_cycle(case6) + ", contains_cycle_2:" + contains_cycle_2(case6));
+	alert("case7 = " + count_pairs(case7) + ", contains_cycle:" + contains_cycle(case7) + ", contains_cycle_2:" + contains_cycle_2(case7));
+	alert("case8 = " + count_pairs(case8) + ", contains_cycle:" + contains_cycle(case8) + ", contains_cycle_2:" + contains_cycle_2(case8));
+	alert("case9 = " + count_pairs(case9) + ", contains_cycle:" + contains_cycle(case9) + ", contains_cycle_2:" + contains_cycle_2(case9));
+	*/
+	// 3.21
+	function make_queue() {
+		return cons(null, null);
+	}
+	
+	function front_ptr(queue) {
+		return car(queue);
+	}
+	
+	function rear_ptr(queue) {
+		return cdr(queue);
+	}
+	
+	function set_front_ptr(queue, item) {
+		set_car(queue, item);
+	}
+	
+	function set_rear_ptr(queue, item) {
+		set_cdr(queue, item);
+	}
+	
+	function is_empty_queue(queue) {
+		return null === front_ptr(queue);
+	}
+	
+	function insert_queue(queue, item) {
+		var new_pair = cons(item, null);
+		if (is_empty_queue(queue)) {
+			set_front_ptr(queue, new_pair);
+			set_rear_ptr(queue, new_pair);
+		} else {
+			set_cdr(rear_ptr(queue), new_pair);
+			set_rear_ptr(queue, new_pair);
+		}
+		return queue;
+	}
+	
+	function delete_queue(queue) {
+		if (is_empty_queue(queue)) {
+			// error
+		} else {
+			set_front_ptr(queue, cdr(front_ptr(queue)));
+		}
+		return queue;
+	}
+	/*
+	var q1 = make_queue();
+	alert(print_list(insert_queue(q1, 'a')));
+	alert(print_list(insert_queue(q1, 'b')));
+	alert(print_list(delete_queue(q1)));
+	alert(print_list(delete_queue(q1)));
+	*/
+	function print_queue(queue) {
+		return print_list(front_ptr(queue));
+	}
+	/*
+	var q2 = make_queue();
+	alert(print_queue(insert_queue(q1, 'a')));
+	alert(print_queue(insert_queue(q1, 'b')));
+	alert(print_queue(delete_queue(q1)));
+	alert(print_queue(delete_queue(q1)));
+	*/
+	function make_queue_as_proc() {
+		var front_ptr = null;
+		var rear_ptr = null;
+	
+		function is_empty_queue() {
+			return null === front_ptr;
+		}
+		
+		function insert_queue(item) {
+			var new_pair = cons(item, null);
+			if (is_empty_queue()) {
+				front_ptr = new_pair;
+				rear_ptr = new_pair;
+			} else {
+				set_cdr(rear_ptr, new_pair);
+				rear_ptr = new_pair;
+			}
+			return dispatch;
+		}
+		
+		function delete_queue() {
+			if (is_empty_queue()) {
+				// error
+			} else {
+				front_ptr = cdr(front_ptr);
+			}
+			return dispatch;
+		}
+		
+		function print_queue() {
+			return print_list(front_ptr);
+		}
+		
+		function dispatch(m) {
+			if ('is_empty_queue' === m) {
+				return is_empty_queue;
+			} else if ('insert_queue' === m) {
+				return insert_queue;
+			} else if ('delete_queue' === m) {
+				return delete_queue;
+			} else if ('print_queue' === m) {
+				return print_queue;
+			} else {
+			}
+		}
+		
+		return dispatch;
+	}
+	/*
+	var q3 = make_queue_as_proc();
+	alert(q3('insert_queue')('a')('print_queue')());
+	alert(q3('insert_queue')('b')('print_queue')());
+	alert(q3('delete_queue')(   )('print_queue')());
+	alert(q3('delete_queue')(   )('print_queue')());
+	*/
+	
+	// 3.23
+	function make_deque() {
+		return cons(null, null);
+	}
+	
+	function is_empty_deque(deque) {
+		return null === front_ptr(deque);
+	}
+	
+	function front_deque(deque) {
+		if (is_empty_deque(deque)) {
+			//error
+		}
+		return car(car(front_ptr(deque)));
+	}
+	
+	function rear_deque(deque) {
+		if (is_empty_deque(deque)) {
+			//error
+		}
+		return car(car(rear_ptr(deque)));
+	}
+	
+	function front_insert_deque(deque, item) {
+		var new_reverse_pair = cons(item, null);
+		var new_pair = cons(new_reverse_pair, front_ptr(deque));
+		if (is_empty_deque(deque)) {
+			set_front_ptr(deque, new_pair);
+			set_rear_ptr(deque, new_pair);
+		} else {
+			set_cdr(car(front_ptr(deque)), new_pair);
+			set_front_ptr(deque, new_pair);
+		}
+		return deque;
+	}
+	
+	function front_delete_deque(deque) {
+		if (is_empty_deque(deque)) {
+			//error
+		} else {
+			set_front_ptr(deque, cdr(front_ptr(deque)));
+			if (null === front_ptr(deque)) {
+				set_rear_ptr(deque, null);
+			} else {
+				set_cdr(car(front_ptr(deque)), null);
+			}
+		}
+		return deque;
+	}
+	
+	function rear_insert_deque(deque, item) {
+		var new_reverse_pair = cons(item, rear_ptr(deque));
+		var new_pair = cons(new_reverse_pair, null);
+		if (is_empty_deque(deque)) {
+			set_front_ptr(deque, new_pair);
+			set_rear_ptr(deque, new_pair);
+		} else {
+			set_cdr(rear_ptr(deque), new_pair);
+			set_rear_ptr(deque, new_pair);
+		}
+		return deque;
+	}
+	
+	function rear_delete_deque(deque, item) {
+		if (is_empty_deque(deque)) {
+			//error
+		} else {
+			set_rear_ptr(deque, cdr(car(rear_ptr(deque))));
+			if (null === rear_ptr(deque)) {
+				set_front_ptr(deque, null);
+			} else {
+				set_cdr(rear_ptr(deque), null);
+			}
+		}
+		return deque;
+	}
+	
+	function print_deque(deque) {
+		var str = "";
+		var ptr = front_ptr(deque);
+		while (null !== ptr) {
+			str += (car(car(ptr)) + " ");
+			ptr = cdr(ptr);
+		}
+		str += "| ";
+		ptr = rear_ptr(deque);
+		while (null !== ptr) {
+			str += (car(car(ptr)) + " ");
+			ptr = cdr(car(ptr));
+		}
+		return str;
+	}
+	
+	var q4 = make_deque();
+	alert(print_deque(front_insert_deque(q4, 'a')));
+	alert(print_deque(front_insert_deque(q4, 'b')));
+	alert(print_deque(rear_insert_deque(q4, 'c')));
+	alert(print_deque(rear_delete_deque(q4)));
+	alert(print_deque(front_delete_deque(q4)));
+	alert(print_deque(front_insert_deque(q4, 'd')));
+	alert(print_deque(rear_delete_deque(q4)));
+	alert(print_deque(front_delete_deque(q4)));
+	
+	//一秒钟变格格
+	
+	// 
 </script>
 </head>
 <body>
