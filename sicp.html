@@ -568,7 +568,6 @@
 			}
 		}
 		return {
-			't' : local_table,
 			'lookup' : lookup,
 			'insert' : insert
 		};
@@ -616,6 +615,70 @@
 	alert(t2.lookup(list('a', 'b', 'c')));
 	alert(t2.lookup(list('a', 'b', 'c', 'd')));
 	
+	// 3.26
+	function make_table_using_BST() {
+		// car: data, cdr: node
+		var local_table = list('*table*');
+		function lookup(key) {
+			var record = car(assoc(key, cdr(local_table), local_table, false));
+			if (record) {
+				return cdr(record);
+			} else {
+				return false;
+			}
+		}
+		function assoc(key, records, parent, is_left_child) {
+			if (null === records) {
+				return cons(false, cons(parent, is_left_child));
+			} else if (key === car(car(records))) {
+				return cons(car(records), cons(parent, is_left_child));
+			} else if (key < car(car(records))) {
+				return assoc(key, car(cdr(records)), cdr(records), true);
+			} else {
+				return assoc(key, cdr(cdr(records)), cdr(records), false);
+			}
+		}
+		function insert(key, value) {
+			var result = assoc(key, cdr(local_table), local_table, false);
+			var record = car(result);
+			var parent = car(cdr(result));
+			var is_left_child = cdr(cdr(result));
+			var new_node = cons(cons(key, value), cons(null, null));
+			if (record) {
+				set_cdr(record, value);
+			} else {
+				if (is_left_child) {
+					set_car(parent, new_node);
+				} else {
+					set_cdr(parent, new_node);
+				}
+			}
+		}
+		return {
+			't' : local_table,
+			'lookup' : lookup,
+			'insert' : insert
+		};
+	}
+	
+	alert("testing make_table_using_BST()");
+	var t3 = make_table_using_BST();
+	alert(t3.lookup(5));
+	t3.insert(5, 5);
+	alert(t3.lookup(5));
+	t3.insert(2, 2);
+	alert(t3.lookup(2));
+	t3.insert(1, 1);
+	alert(t3.lookup(1));
+	t3.insert(3, 3);
+	alert(t3.lookup(4));
+	t3.insert(2, 3);
+	alert(t3.lookup(2));
+	t3.insert(6, 6);
+	alert(t3.lookup(6));
+	alert(print_list(t3.t));
+	
+	// 3.27
 	
 </script>
 </head>
