@@ -316,51 +316,51 @@
 	alert("case8 = " + count_pairs(case8) + ", contains_cycle:" + contains_cycle(case8) + ", contains_cycle_2:" + contains_cycle_2(case8));
 	alert("case9 = " + count_pairs(case9) + ", contains_cycle:" + contains_cycle(case9) + ", contains_cycle_2:" + contains_cycle_2(case9));
 	*/
-	// // 3.21
-	// function make_queue() {
-		// return cons(null, null);
-	// }
+	// 3.21
+	function make_queue() {
+		return cons(null, null);
+	}
 	
-	// function front_ptr(queue) {
-		// return car(queue);
-	// }
+	function front_ptr(queue) {
+		return car(queue);
+	}
 	
-	// function rear_ptr(queue) {
-		// return cdr(queue);
-	// }
+	function rear_ptr(queue) {
+		return cdr(queue);
+	}
 	
-	// function set_front_ptr(queue, item) {
-		// set_car(queue, item);
-	// }
+	function set_front_ptr(queue, item) {
+		set_car(queue, item);
+	}
 	
-	// function set_rear_ptr(queue, item) {
-		// set_cdr(queue, item);
-	// }
+	function set_rear_ptr(queue, item) {
+		set_cdr(queue, item);
+	}
 	
-	// function is_empty_queue(queue) {
-		// return null === front_ptr(queue);
-	// }
+	function is_empty_queue(queue) {
+		return null === front_ptr(queue);
+	}
 	
-	// function insert_queue(queue, item) {
-		// var new_pair = cons(item, null);
-		// if (is_empty_queue(queue)) {
-			// set_front_ptr(queue, new_pair);
-			// set_rear_ptr(queue, new_pair);
-		// } else {
-			// set_cdr(rear_ptr(queue), new_pair);
-			// set_rear_ptr(queue, new_pair);
-		// }
-		// return queue;
-	// }
+	function insert_queue(queue, item) {
+		var new_pair = cons(item, null);
+		if (is_empty_queue(queue)) {
+			set_front_ptr(queue, new_pair);
+			set_rear_ptr(queue, new_pair);
+		} else {
+			set_cdr(rear_ptr(queue), new_pair);
+			set_rear_ptr(queue, new_pair);
+		}
+		return queue;
+	}
 	
-	// function delete_queue(queue) {
-		// if (is_empty_queue(queue)) {
-			// // error
-		// } else {
-			// set_front_ptr(queue, cdr(front_ptr(queue)));
-		// }
-		// return queue;
-	// }
+	function delete_queue(queue) {
+		if (is_empty_queue(queue)) {
+			// error
+		} else {
+			set_front_ptr(queue, cdr(front_ptr(queue)));
+		}
+		return queue;
+	}
 	// /*
 	// var q1 = make_queue();
 	// alert(print_list(insert_queue(q1, 'a')));
@@ -540,145 +540,470 @@
 	// //一秒钟变格格
 	
 	// 3.24
-	function make_table(is_same_key) {
-		var local_table = list('*table*');
-		function lookup(key) {
-			var record = assoc(key, cdr(local_table));
-			if (record) {
-				return cdr(record);
-			} else {
-				return false;
-			}
-		}
-		function assoc(key, records) {
-			if (null === records) {
-				return false;
-			} else if (is_same_key(key, car(car(records)))) {
-				return car(records);
-			} else {
-				return assoc(key, cdr(records));
-			}
-		}
-		function insert(key, value) {
-			var record = assoc(key, cdr(local_table));
-			if (record) {
-				set_cdr(record, value);
-			} else {
-				set_cdr(local_table, cons(cons(key, value), cdr(local_table)));
-			}
-		}
-		return {
-			'lookup' : lookup,
-			'insert' : insert
-		};
-	}
+	// function make_table(is_same_key) {
+		// var local_table = list('*table*');
+		// function lookup(key) {
+			// var record = assoc(key, cdr(local_table));
+			// if (record) {
+				// return cdr(record);
+			// } else {
+				// return false;
+			// }
+		// }
+		// function assoc(key, records) {
+			// if (null === records) {
+				// return false;
+			// } else if (is_same_key(key, car(car(records)))) {
+				// return car(records);
+			// } else {
+				// return assoc(key, cdr(records));
+			// }
+		// }
+		// function insert(key, value) {
+			// var record = assoc(key, cdr(local_table));
+			// if (record) {
+				// set_cdr(record, value);
+			// } else {
+				// set_cdr(local_table, cons(cons(key, value), cdr(local_table)));
+			// }
+		// }
+		// return {
+			// 'lookup' : lookup,
+			// 'insert' : insert
+		// };
+	// }
 	
-	var t1 = make_table(function (x, y) {
-		if (x === y) {
-			return true;
-		} else {
-			var d = x - y;
-			var e = 1e-3;
-			return d > -e && d < e;
-		}
-	});
-	alert(t1.lookup('a'));
-	t1.insert('a', 1);
-	alert(t1.lookup('a'));
-	t1.insert('a', 2);
-	alert(t1.lookup('a'));
-	t1.insert(0.0001, 3);
-	alert(t1.lookup(0.0002));
+	// var t1 = make_table(function (x, y) {
+		// if (x === y) {
+			// return true;
+		// } else {
+			// var d = x - y;
+			// var e = 1e-3;
+			// return d > -e && d < e;
+		// }
+	// });
+	// alert(t1.lookup('a'));
+	// t1.insert('a', 1);
+	// alert(t1.lookup('a'));
+	// t1.insert('a', 2);
+	// alert(t1.lookup('a'));
+	// t1.insert(0.0001, 3);
+	// alert(t1.lookup(0.0002));
 	
-	// 3.25
-	function is_same_list(l1, l2) {
-		if (null === l1 &&
-			null === l2) {
-			return true;
-		} else if (is_pair(l1) &&
-					is_pair(l2) &&
-					car(l1) === car(l2)) {
-			return is_same_list(cdr(l1), cdr(l2));
-		} else {
-			return false;
-		}
-	}
-	var t2 = make_table(is_same_list);
-	alert(t2.lookup(list('a')));
-	t2.insert(list('a'), 1);
-	alert(t2.lookup(list('a')));
-	t2.insert(list('a', 'b'), 2);
-	alert(t2.lookup(list('a', 'b')));
-	t2.insert(list('a', 'b'), 3);
-	alert(t2.lookup(list('a', 'b')));
-	t2.insert(list('a', 'b', 'c', 'd'), 3);
-	alert(t2.lookup(list('a', 'b', 'c')));
-	alert(t2.lookup(list('a', 'b', 'c', 'd')));
+	// // 3.25
+	// function is_same_list(l1, l2) {
+		// if (null === l1 &&
+			// null === l2) {
+			// return true;
+		// } else if (is_pair(l1) &&
+					// is_pair(l2) &&
+					// car(l1) === car(l2)) {
+			// return is_same_list(cdr(l1), cdr(l2));
+		// } else {
+			// return false;
+		// }
+	// }
+	// var t2 = make_table(is_same_list);
+	// alert(t2.lookup(list('a')));
+	// t2.insert(list('a'), 1);
+	// alert(t2.lookup(list('a')));
+	// t2.insert(list('a', 'b'), 2);
+	// alert(t2.lookup(list('a', 'b')));
+	// t2.insert(list('a', 'b'), 3);
+	// alert(t2.lookup(list('a', 'b')));
+	// t2.insert(list('a', 'b', 'c', 'd'), 3);
+	// alert(t2.lookup(list('a', 'b', 'c')));
+	// alert(t2.lookup(list('a', 'b', 'c', 'd')));
 	
-	// 3.26
-	function make_table_using_BST() {
-		// car: data, cdr: node
-		var local_table = list('*table*');
-		function lookup(key) {
-			var record = car(assoc(key, cdr(local_table), local_table, false));
-			if (record) {
-				return cdr(record);
-			} else {
-				return false;
-			}
-		}
-		function assoc(key, records, parent, is_left_child) {
-			if (null === records) {
-				return cons(false, cons(parent, is_left_child));
-			} else if (key === car(car(records))) {
-				return cons(car(records), cons(parent, is_left_child));
-			} else if (key < car(car(records))) {
-				return assoc(key, car(cdr(records)), cdr(records), true);
-			} else {
-				return assoc(key, cdr(cdr(records)), cdr(records), false);
-			}
-		}
-		function insert(key, value) {
-			var result = assoc(key, cdr(local_table), local_table, false);
-			var record = car(result);
-			var parent = car(cdr(result));
-			var is_left_child = cdr(cdr(result));
-			var new_node = cons(cons(key, value), cons(null, null));
-			if (record) {
-				set_cdr(record, value);
-			} else {
-				if (is_left_child) {
-					set_car(parent, new_node);
-				} else {
-					set_cdr(parent, new_node);
-				}
-			}
-		}
-		return {
-			't' : local_table,
-			'lookup' : lookup,
-			'insert' : insert
-		};
-	}
+	// // 3.26
+	// function make_table_using_BST() {
+		// // car: data, cdr: node
+		// var local_table = list('*table*');
+		// function lookup(key) {
+			// var record = car(assoc(key, cdr(local_table), local_table, false));
+			// if (record) {
+				// return cdr(record);
+			// } else {
+				// return false;
+			// }
+		// }
+		// function assoc(key, records, parent, is_left_child) {
+			// if (null === records) {
+				// return cons(false, cons(parent, is_left_child));
+			// } else if (key === car(car(records))) {
+				// return cons(car(records), cons(parent, is_left_child));
+			// } else if (key < car(car(records))) {
+				// return assoc(key, car(cdr(records)), cdr(records), true);
+			// } else {
+				// return assoc(key, cdr(cdr(records)), cdr(records), false);
+			// }
+		// }
+		// function insert(key, value) {
+			// var result = assoc(key, cdr(local_table), local_table, false);
+			// var record = car(result);
+			// var parent = car(cdr(result));
+			// var is_left_child = cdr(cdr(result));
+			// var new_node = cons(cons(key, value), cons(null, null));
+			// if (record) {
+				// set_cdr(record, value);
+			// } else {
+				// if (is_left_child) {
+					// set_car(parent, new_node);
+				// } else {
+					// set_cdr(parent, new_node);
+				// }
+			// }
+		// }
+		// return {
+			// 't' : local_table,
+			// 'lookup' : lookup,
+			// 'insert' : insert
+		// };
+	// }
 	
-	alert("testing make_table_using_BST()");
-	var t3 = make_table_using_BST();
-	alert(t3.lookup(5));
-	t3.insert(5, 5);
-	alert(t3.lookup(5));
-	t3.insert(2, 2);
-	alert(t3.lookup(2));
-	t3.insert(1, 1);
-	alert(t3.lookup(1));
-	t3.insert(3, 3);
-	alert(t3.lookup(4));
-	t3.insert(2, 3);
-	alert(t3.lookup(2));
-	t3.insert(6, 6);
-	alert(t3.lookup(6));
-	alert(print_list(t3.t));
+	// alert("testing make_table_using_BST()");
+	// var t3 = make_table_using_BST();
+	// alert(t3.lookup(5));
+	// t3.insert(5, 5);
+	// alert(t3.lookup(5));
+	// t3.insert(2, 2);
+	// alert(t3.lookup(2));
+	// t3.insert(1, 1);
+	// alert(t3.lookup(1));
+	// t3.insert(3, 3);
+	// alert(t3.lookup(4));
+	// t3.insert(2, 3);
+	// alert(t3.lookup(2));
+	// t3.insert(6, 6);
+	// alert(t3.lookup(6));
+	// alert(print_list(t3.t));
 	
 	// 3.27
+	// 
+	
+	// 3.28
+	function inverter(input, output) {
+		function invert_action_procedure() {
+			var new_value = (input.get_signal() + 1) % 2;
+			after_delay(inverter_delay, function () {
+				output.set_signal(new_value);
+			});
+		}
+		input.add_action(invert_action_procedure);
+	}
+
+	function and_gate(a1, a2, output) {
+		function and_action_procedure() {
+			var new_value = a1.get_signal() && a2.get_signal();
+			after_delay(and_gate_delay, function () {
+				output.set_signal(new_value);
+			});
+		}
+		a1.add_action(and_action_procedure);
+		a2.add_action(and_action_procedure);
+	}
+
+	function or_gate(a1, a2, output) {
+		function or_action_procedure() {
+			var new_value = a1.get_signal() || a2.get_signal();
+			after_delay(or_gate_delay, function () {
+				output.set_signal(new_value);
+			});
+		}
+		a1.add_action(or_action_procedure);
+		a2.add_action(or_action_procedure);
+	}
+	
+	// 3.29
+	function or_gate_compound(a1, a2, output) {
+		var b1 = make_wire(),
+			b2 = make_wire(),
+			c = make_wire();
+		inverter(a1, b1);
+		inverter(a2, b2);
+		and_gate(b1, b2, c);
+		inverter(c, output);
+	}
+	// delay = inverter_delay + and_gate_delay + inverter_delay
+	
+	// 3.30
+	function ripple_carry_adder(a, b, s, c) {
+		if (null !== a) {
+			var c_in = make_wire();
+			set_signal(c_in, 0);
+			full_adder(car(a), car(b), c_in, car(s), c);
+			ripple_carry_adder(cdr(a), cdr(b), cdr(s), c_in);
+		}
+	}
+	// delay = n*full_adder_delay
+	//       = n*(2*half_add_delay + or_gate_delay)
+	//       = n*(2*(max(or_gate_delay, (and_gate_delay + inverter_delay)) + and_gate_delay) + or_gate_delay)
+
+	// 3.31
+	function make_wire() {
+		var signal_value = 0;
+		var action_procedures = null;
+		function set_my_signal(new_value) {
+			
+			function call_each(procedures) {
+				if (null !== procedures) {
+					car(procedures)();
+					call_each(cdr(procedures));
+				}
+			}
+			if (signal_value !== new_value) {
+				signal_value = new_value;
+				call_each(action_procedures);
+			}
+		}
+		function accept_action_procedure(proc) {
+			action_procedures = cons(proc, action_procedures);
+			proc();
+		}
+		function get_signal() {
+			return signal_value;
+		}
+		return {
+			'get_signal' : get_signal,
+			'set_signal' : set_my_signal,
+			'add_action' : accept_action_procedure
+		};
+	}
+
+	function make_agenda() {
+		var agenda = list(0);
+
+		function make_time_segment(time, queue) {
+			return cons(time, queue);
+		}
+		function segment_time(s) {
+			return car(s);
+		}
+		function segment_queue(s) {
+			return cdr(s);
+		}
+
+		function current_time() {
+			return car(agenda);
+		}
+		function set_current_time(time) {
+			set_car(agenda, time);
+		}
+		function segments() {
+			return cdr(agenda);
+		}
+		function set_segments(segments) {
+			set_cdr(agenda, segments);
+		}
+		function first_segment() {
+			return car(segments(agenda));
+		}
+		function rest_segments() {
+			return cdr(segments(agenda));
+		}
+		function is_empty() {
+			return (null === cdr(agenda));
+		}
+		function first_action() {
+			if (!is_empty()) {
+				var first_seg = first_segment();
+				set_current_time(segment_time(first_seg));
+				return car(front_ptr(segment_queue(first_seg)));
+			}
+		}
+		function remove_first_action() {
+			var q = segment_queue(first_segment());
+			delete_queue(q);
+			if (is_empty_queue(q)) {
+				set_segments(rest_segments());
+			}
+		}
+		function add_action(time, action) {
+			function does_belong_before(segments) {
+				return (null === segments) ||
+					(time < segment_time(car(segments)));
+			}
+			function make_new_time_segment(time, action) {
+				var q = make_queue();
+				insert_queue(q, action);
+				return make_time_segment(time, q);
+			}
+			function add_to_segments(segments) {
+				if (segment_time(car(segments)) == time) {
+					insert_queue(segment_queue(car(segments)), action);
+				} else {
+					var rest = cdr(segments);
+					if (does_belong_before(rest)) {
+						set_cdr(segments, cons(make_new_time_segment(time, action), cdr(segments)));
+					} else {
+						add_to_segments(rest);
+					}
+				}
+			}
+			var segs = segments();
+			if (does_belong_before(segs)) {
+				set_segments(cons(make_new_time_segment(time, action), segs));
+			} else {
+				add_to_segments(segs);
+			}
+		}
+		return {
+			'current_time' : current_time,
+			'is_empty' : is_empty,
+			'first_action' : first_action,
+			'remove_first_action' : remove_first_action,
+			'add_action' : add_action
+		};
+	}
+
+	function after_delay(delay, action) {
+		the_agenda.add_action(the_agenda.current_time() + delay, action);
+	}
+
+	function propagate() {
+		if (!the_agenda.is_empty()) {
+			var first_action = the_agenda.first_action();
+			first_action();
+			the_agenda.remove_first_action();
+			propagate();
+		}
+	}
+
+	function probe(name, wire) {
+		wire.add_action(function () {
+			alert(name + " " + the_agenda.current_time() + " New-value = " + wire.get_signal());
+		});
+	}
+
+	var the_agenda = make_agenda();
+	var inverter_delay = 2;
+	var and_gate_delay = 3;
+	var or_gate_delay = 5;
+	var input_1 = make_wire();
+	var input_2 = make_wire();
+	var sum = make_wire();
+	var carry = make_wire();
+	//probe('sum', sum);
+	//probe('carry', carry);
+	
+	function half_adder(a, b, s, c) {
+		var d = make_wire();
+		var e = make_wire();
+		or_gate(a, b, d);
+		and_gate(a, b, c);
+		inverter(c, e);
+		and_gate(d, e, s);
+	}
+	
+	//half_adder(input_1, input_2, sum, carry);
+	//input_1.set_signal(1);
+	//propagate();
+
+	//input_2.set_signal(1);
+	//propagate();
+	
+	// 3.31
+	// 根据输入全0初始化电路,特别是当电路里有inverter的时候
+	
+	// 3.32
+	var input_3 = make_wire();
+	var input_4 = make_wire();
+	var output = make_wire();
+	probe('and', output);
+	and_gate(input_3, input_4, output);
+	
+	input_3.set_signal(0);
+	input_4.set_signal(1);
+	after_delay(2, function () {input_3.set_signal(1);});
+	after_delay(2, function () {input_4.set_signal(0);});
+	propagate();
+	
+	// 3.32
+	// 如果agenda里不是queue,and最后会被置为1.那为什么不在after_delay()里再去调get_signal()拿最新的值来计算呢?因为after_delay()的本意就是取当前值,延时再设置.
+	
+	// 3.33
+	function averager(a, b, c) {
+		var u = make_connector();
+		var v = make_connector();
+		
+		adder(a, b, u);
+		constant(2, v);
+		multiplier(c, v, u);
+	}
+	
+	// 3.34
+	// 只设a,b正确
+	// 只设b,a得不到值
+	// ab都设,会报错(除非a的平方刚好是b)
+	
+	// 3.35
+	function squarer(a, b) {
+		function process_new_value() {
+			if (b.has_value()) {
+				if (b.get_value() < 0) {
+					error("square less than 0 -- SQUARER", b.get_value());
+				} else {
+					a.set_value(Math.sqrt(b.get_value()), me);
+				}
+			} else if (a.has_value()) {
+				b.set_value(a.get_value()*a.get_value());
+			}
+		}
+		function process_forget_value() {
+			a.forget_value(me);
+			b.forget_value(me);
+			process_new_value();
+		}
+		var me = {
+			'process_new_value' : process_new_value,
+			'process_forget_value' : process_forget_value
+		};
+		connect(a, me);
+		connect(b, me);
+		return me;
+	}
+	
+	// 3.36
+	
+	// 3.37
+	function c_add(x, y) {
+		var z = make_connector();
+		adder(x, y, z);
+		return z;
+	}
+	
+	function c_sub(x, y) {
+		var z = make_connector();
+		adder(y, z, x);
+		return z;
+	}
+	
+	function c_mul(x, y) {
+		var z = make_connector();
+		multiplier(x, y, z);
+		return z;
+	}
+	
+	function c_div(x, y) {
+		var z = make_connector();
+		multiplier(y, z, x);
+		return z;
+	}
+	
+	function c_val(x) {
+		var y = make_connector();
+		constant(x, y);
+		return y;
+	}
+	
+	// 3.38
+	// Peter, Paul, Mary: (100 + 10 - 20)/2 = 45
+	// Peter, Mary, Paul: (100 + 10)/2 - 20 = 35
+	// Paul, Peter, Mary: (100 - 20 + 10)/2 = 45
+	// Paul, Mary, Peter: (100 - 20)/2 + 10 = 50
+	// Mary, Peter, Paul: 100/2 + 10 - 20 = 40
+	// Mary, Paul, Peter: 100/2 - 20 + 10 = 40
+	
 	
 </script>
 </head>
